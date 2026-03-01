@@ -27,6 +27,11 @@ export const envSchema = baseEnvSchema
 
     GITHUB_CLIENT_ID: z.string().nonempty(),
     GITHUB_CLIENT_SECRET: z.string().nonempty(),
+    GITHUB_APP_SLUG: z.string().nonempty().default('agentic-app'),
+    GITHUB_APP_ID: z.string().nonempty(),
+    GITHUB_APP_CLIENT_ID: z.string().nonempty(),
+    GITHUB_APP_CLIENT_SECRET: z.string().nonempty(),
+    GITHUB_APP_WEBHOOK_SECRET: z.string().nonempty(),
 
     RESEND_API_KEY: z.string().nonempty(),
 

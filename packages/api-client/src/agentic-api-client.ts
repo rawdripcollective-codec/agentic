@@ -17,6 +17,28 @@ import defaultKy, { type KyInstance } from 'ky'
 
 import type { OnUpdateAuthSessionFunction } from './types'
 
+export type GitHubAppScope = 'user' | 'team' | 'project'
+
+export type GitHubAppInstallationStatus = {
+  scope: GitHubAppScope
+  scopeId: string
+  isInstalled: boolean
+  installUrl: string
+  updatePermissionsUrl: string
+  reconnectUrl: string
+  syncUrl: string
+  connectedAccountLogin?: string
+  connectedAccountType?: 'User' | 'Organization'
+  connectedRepositories: string[]
+  lastSyncedAt?: string
+}
+
+export type GitHubAppActionResponse = {
+  ok: true
+  action: 'sync' | 'reconnect'
+  status: GitHubAppInstallationStatus
+}
+
 export class AgenticApiClient {
   static readonly DEFAULT_API_BASE_URL = 'https://api.agentic.so'
 
@@ -226,6 +248,78 @@ export class AgenticApiClient {
 
     this.onUpdateAuth?.(this._authSession)
     return this._authSession
+  }
+
+  async getUserGitHubAppInstallationStatus({
+    userId
+  }: {
+    userId: string
+  }): Promise<GitHubAppInstallationStatus> {
+    return this.ky.get(`v1/github-app/users/${userId}`).json()
+  }
+
+  async getTeamGitHubAppInstallationStatus({
+    teamId
+  }: {
+    teamId: string
+  }): Promise<GitHubAppInstallationStatus> {
+    return this.ky.get(`v1/github-app/teams/${teamId}`).json()
+  }
+
+  async getProjectGitHubAppInstallationStatus({
+    projectId
+  }: {
+    projectId: string
+  }): Promise<GitHubAppInstallationStatus> {
+    return this.ky.get(`v1/github-app/projects/${projectId}`).json()
+  }
+
+  async syncUserGitHubAppInstallation({
+    userId
+  }: {
+    userId: string
+  }): Promise<GitHubAppActionResponse> {
+    return this.ky.post(`v1/github-app/users/${userId}/sync`).json()
+  }
+
+  async syncTeamGitHubAppInstallation({
+    teamId
+  }: {
+    teamId: string
+  }): Promise<GitHubAppActionResponse> {
+    return this.ky.post(`v1/github-app/teams/${teamId}/sync`).json()
+  }
+
+  async syncProjectGitHubAppInstallation({
+    projectId
+  }: {
+    projectId: string
+  }): Promise<GitHubAppActionResponse> {
+    return this.ky.post(`v1/github-app/projects/${projectId}/sync`).json()
+  }
+
+  async reconnectUserGitHubAppInstallation({
+    userId
+  }: {
+    userId: string
+  }): Promise<GitHubAppActionResponse> {
+    return this.ky.post(`v1/github-app/users/${userId}/reconnect`).json()
+  }
+
+  async reconnectTeamGitHubAppInstallation({
+    teamId
+  }: {
+    teamId: string
+  }): Promise<GitHubAppActionResponse> {
+    return this.ky.post(`v1/github-app/teams/${teamId}/reconnect`).json()
+  }
+
+  async reconnectProjectGitHubAppInstallation({
+    projectId
+  }: {
+    projectId: string
+  }): Promise<GitHubAppActionResponse> {
+    return this.ky.post(`v1/github-app/projects/${projectId}/reconnect`).json()
   }
 
   /** Gets the currently authenticated user. */

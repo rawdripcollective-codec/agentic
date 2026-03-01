@@ -30,6 +30,7 @@ import { registerV1GetPublicDeploymentByIdentifier } from './deployments/get-pub
 import { registerV1ListDeployments } from './deployments/list-deployments'
 import { registerV1PublishDeployment } from './deployments/publish-deployment'
 import { registerV1UpdateDeployment } from './deployments/update-deployment'
+import { registerV1GitHubAppRoutes } from './github-app/routes'
 import { registerHealthCheck } from './health-check'
 import { registerV1CreateProject } from './projects/create-project'
 import { registerV1GetProject } from './projects/get-project'
@@ -83,6 +84,7 @@ registerV1GitHubOAuthCallback(publicRouter)
 // Users
 registerV1GetUser(privateRouter)
 registerV1UpdateUser(privateRouter)
+registerV1GitHubAppRoutes(privateRouter)
 
 // Teams
 registerV1CreateTeam(privateRouter)

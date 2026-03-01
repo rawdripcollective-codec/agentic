@@ -70,3 +70,56 @@ Anyone can publish their own live MCP products with Agentic, but you'll need to 
 **Agentic is proudly 100% open source.**
 
 Interested in contributing or building Agentic from scratch? See [contributing.md](./contributing.md).
+
+## GitHub App installation integration setup
+
+To enable project/team/user installation status and sync/reconnect flows, configure a GitHub App and wire these env vars.
+
+### Required environment variables
+
+Add these in `apps/api/.env` (see `apps/api/.env.example`):
+
+- `GITHUB_APP_SLUG` — App slug used to generate install links (`https://github.com/apps/<slug>/installations/new`).
+- `GITHUB_APP_ID` — Numeric GitHub App ID.
+- `GITHUB_APP_CLIENT_ID` — GitHub App client ID.
+- `GITHUB_APP_CLIENT_SECRET` — GitHub App client secret.
+- `GITHUB_APP_WEBHOOK_SECRET` — Secret used to verify GitHub webhooks.
+
+### GitHub App callback URLs
+
+Use your API and web origins as configured in env:
+
+- **User authorization callback URL**:
+  - `${AGENTIC_WEB_BASE_URL}/auth/github/success`
+- **Setup URL** (optional, for post-install redirects):
+  - `${AGENTIC_WEB_BASE_URL}/app`
+
+### GitHub App webhook URL
+
+Set the webhook URL to:
+
+- `${AGENTIC_API_BASE_URL}/v1/webhooks/github`
+
+> If you proxy API traffic through another domain, use that public URL instead.
+
+### Required GitHub App permissions
+
+Minimum recommended permissions:
+
+- Repository permissions:
+  - **Contents: Read-only**
+  - **Metadata: Read-only**
+- Organization permissions:
+  - **Members: Read-only** (if org-scoped installations are supported)
+
+If you need write operations later, expand permissions intentionally and use the UI “Update permissions” link to prompt re-approval.
+
+### Required webhook events
+
+Subscribe to at least:
+
+- `installation`
+- `installation_repositories`
+- `installation_target`
+
+These events are enough to keep installation status and repository scope in sync.
