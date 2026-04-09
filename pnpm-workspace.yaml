@@ -104,7 +104,7 @@ catalog:
   exit-hook: ^4.0.0
   fast-content-type-parse: ^3.0.0
   fast-uri: ^3.0.6
-  fast-xml-parser: ^5.2.5
+  fast-xml-parser: ^4.5.5
   fastmcp: ^3.8.2
   genkit: ^1.13.0
   genkitx-openai: ^0.22.3
