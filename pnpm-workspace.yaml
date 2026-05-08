@@ -113,7 +113,7 @@ catalog:
   googleapis: ^150.0.1
   hash-object: ^5.0.1
   hast-util-to-jsx-runtime: ^2.3.6
-  hono: ^4.8.4
+  hono: ^4.12.16
   is-obj: ^3.0.0
   is-relative-url: ^4.0.0
   jsonrepair: ^3.12.0
