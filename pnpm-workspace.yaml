@@ -179,7 +179,7 @@ catalog:
   typescript: ^5.9.2
   unconfig: ^7.3.2
   vite-tsconfig-paths: ^5.1.4
-  vitest: ^3.2.4
+  vitest: ^3.2.6
   wikibase-sdk: ^10.2.3
   wrangler: ^4.23.0
   xsai: ^0.3.0-beta.4
